@@ -37,7 +37,7 @@ var stringifyJSON = function(obj) {
 		}
 	} else if(type === 'string'){	//obj is string
 		string += '"' + obj + '"';
-	} else {	//obj is none of above (bool, num)
+	} else if(type === 'boolean'||'number') {	//obj is boolean or num
 		string += obj;
 	}
 	return string;
