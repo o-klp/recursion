@@ -14,18 +14,24 @@ var stringifyJSON = function(obj) {
 			string += '[';
 			if(obj.length){
 				for(var i = 0; i < obj.length-1; i++){
-					stringifyJSON(obj[i]);
+					string += stringifyJSON(obj[i]);
 					string += ',';
 				}
-				stringifyJSON(obj[obj.length-1]);
+				string += stringifyJSON(obj[obj.length-1]);
 			}
 			string += ']';
 		} else {	//obj is {} object
 			string += '{';
 			for(var x in obj){
-				stringifyJSON(x);
-				string += ':';
-				stringifyJSON(obj[x]);
+				if((typeof(obj[x]) != 'undefined')&&(typeof(obj[x]) != 'function')){	//don't stringify if function or undefined
+					string += stringifyJSON(x);
+					string += ':';
+					string += stringifyJSON(obj[x]);
+					string += ',';
+				}
+			}
+			if(string.charAt(string.length-1) === ','){
+				string = string.slice(0, -1);
 			}
 			string += '}';
 		}
